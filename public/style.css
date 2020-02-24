@@ -1,7 +1,42 @@
 body{
     background-color: #873336;
+    display: flex;
+    /* justify-items: space-between; */
+    /* justify-content: space-between; */
 }
+
+/* 
+.homePage{
+    display: flex;
+    justify-content: space-between;
+} */
 
 h1{
     color: whitesmoke;
+}
+
+h3{
+    color: whitesmoke;
+}
+
+.navBar{
+    /* display: flex;
+    flex-direction: column; */
+    padding: 170px 20px 0 0px;
+}
+
+li{
+    text-decoration: none;
+    list-style: none;
+    color: whitesmoke;
+    padding: 6px;
+}
+
+a{
+    text-decoration: none;
+    color: whitesmoke;
+}
+
+li :hover{
+    background-color: darkgrey;
 }

@@ -20,22 +20,39 @@ app.engine(
 );
 app.set("view engine", ".hbs");
 
-app.get('/', (req, res) => {
-    // let data = await harryPotterData();
-    // console.log(data);
+app.get('/', async (req, res) => {
+    let data = await harryPotterData(character);
+    console.log(data);
+
+    // let name = data.name;
+    // let house = data.house;
+    // console.log(name);
+    // console.log(house);
     
     res.render('index');
 });
 
-app.post('/', async(req, res) => {
-    let data = await harryPotterData.harryPotterData(character);
-    console.log(data);
-    
-    res.render("index", {data: {
-        character
-    }})
+app.get('/characters', async(req, res) => {
+    res.render('characters');
+  })
 
+app.get('/sortingHat', async(req, res) => {
+  res.render('sortingHat');
 })
+
+app.get('/spells', async(req, res) => {
+  res.render('spells');
+})
+
+// app.post('/', async(req, res) => {
+//     let data = await harryPotterData();
+//     console.log(data);
+    
+//     res.render("index", {data: {
+//         character
+//     }})
+
+// })
 
 app.listen(3004, () => {
     console.log("server listening on 3004");
