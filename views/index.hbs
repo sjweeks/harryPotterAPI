@@ -1,7 +1,19 @@
-<h1>Harry Potter API</h1>
+<div class="contentContainer">
+    <h1>Harry Potter API</h1>
 
-<ul>
-    {{#each data}}
-    <li>{{@key}} : {{this}}</li>
-    {{/each}}
-</ul>
+    <ul>
+        {{#each data}}
+        <li>{{@key}} : {{this}}</li>
+        {{/each}}
+    </ul>
+
+
+    <form action="/" method="POST">
+        <input class="inputSections" type="text" name="characterName" placeholder="Character Name">
+        <br>
+        <br>
+        <input class="inputButton" type="submit" value="Submit">
+    </form>
+
+
+</div>

@@ -2,6 +2,7 @@ const hbs = require("express-handlebars");
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
+const fs = require("fs");
 
 const app = express();
 
@@ -21,16 +22,43 @@ app.engine(
 app.set("view engine", ".hbs");
 
 app.get('/', async (req, res) => {
-    let data = await harryPotterData(character);
-    console.log(data);
+    let data = await harryPotterData();
+    // console.log(data);
 
-    // let name = data.name;
+    // fs.writeFileSync("harryPotter.json", data)
+
+    let name = data.name;
+    let role = data.role;
+    let house = data.house;
+    let animagus = data.animagus;
+    let ministryOfMagic = data.ministryOfMagic;
+    let orderOfThePhoenix = data.orderOfThePhoenix;
+    let dumbledoresArmy = data.dumbledoresArmy;
+    let deathEater = data.deathEater;
+    let bloodStatus = data.bloodStatus;
+
     // let house = data.house;
     // console.log(name);
+    // console.log(role);
     // console.log(house);
+    // console.log(animagus);
+    // console.log(ministryOfMagic);
+    // console.log(orderOfThePhoenix);
+    // console.log(dumbledoresArmy);
+    // console.log(deathEater);
+    // console.log(bloodStatus);
+
     
     res.render('index');
 });
+
+app.get('/login', async(req, res) => {
+    res.render('login');
+  })
+
+  app.get('/signup', async(req, res) => {
+    res.render('signup');
+  })
 
 app.get('/characters', async(req, res) => {
     res.render('characters');
@@ -44,15 +72,37 @@ app.get('/spells', async(req, res) => {
   res.render('spells');
 })
 
-// app.post('/', async(req, res) => {
-//     let data = await harryPotterData();
-//     console.log(data);
-    
-//     res.render("index", {data: {
-//         character
-//     }})
 
-// })
+app.post("/", async (req,res) => {
+    let character = req.body.character;
+    console.log(character);
+
+    let data = await harryPotterData();
+
+    let name = data.name;
+    let role = data.role;
+    let house = data.house;
+    let animagus = data.animagus;
+    let ministryOfMagic = data.ministryOfMagic;
+    let orderOfThePhoenix = data.orderOfThePhoenix;
+    let dumbledoresArmy = data.dumbledoresArmy;
+    let deathEater = data.deathEater;
+    let bloodStatus = data.bloodStatus;
+
+    res.render("index", {data: {
+        character,
+        name,
+        role,
+        house,
+        animagus,
+        ministryOfMagic,
+        orderOfThePhoenix,
+        dumbledoresArmy,
+        deathEater,
+        bloodStatus,
+    }})
+
+})
 
 app.listen(3004, () => {
     console.log("server listening on 3004");
