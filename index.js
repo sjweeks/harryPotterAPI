@@ -21,7 +21,7 @@ app.engine(
 );
 app.set("view engine", ".hbs");
 
-app.get('/', async (req, res) => {
+app.get('/characters', async (req, res) => {
     let data = await harryPotterData();
     // console.log(data);
 
@@ -49,7 +49,7 @@ app.get('/', async (req, res) => {
     // console.log(bloodStatus);
 
     
-    res.render('index');
+    res.render('characters');
 });
 
 app.get('/login', async(req, res) => {
@@ -60,8 +60,8 @@ app.get('/login', async(req, res) => {
     res.render('signup');
   })
 
-app.get('/characters', async(req, res) => {
-    res.render('characters');
+app.get('/', async(req, res) => {
+    res.render('index');
   })
 
 app.get('/sortingHat', async(req, res) => {
@@ -73,7 +73,7 @@ app.get('/spells', async(req, res) => {
 })
 
 
-app.post("/", async (req,res) => {
+app.post("/characters", async (req,res) => {
     let character = req.body.character;
     console.log(character);
 
@@ -89,8 +89,8 @@ app.post("/", async (req,res) => {
     let deathEater = data.deathEater;
     let bloodStatus = data.bloodStatus;
 
-    res.render("index", {data: {
-        character,
+    res.render("characters", {data: {
+
         name,
         role,
         house,

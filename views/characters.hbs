@@ -1,11 +1,12 @@
 <div class="contentContainer">
-    <h1>Harry Potter API</h1>
+    <h1>Character Search</h1>
     <ul>
         {{#each data}}
         <li>{{@key}} : {{this}}</li>
         {{/each}}
     </ul>
-
+    <br>
+    <br>
     <form action="/characters" method="POST">
         <input class="inputSections" type="text" name="characterName" placeholder="Enter Character Name">
         <br>

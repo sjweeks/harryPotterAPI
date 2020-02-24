@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Harry Potter API</title>
 </head>
-<body class="homePage">
-    {{> navbar}}
-    <div class="container">
-        {{{body}}}
+
+<body>
+    {{> header}}
+    <div class="homePage">
+        <div class="navBar">
+            {{> navbar}}
+        </div>
+        <div class="container">
+            {{{body}}}
+        </div>
     </div>
+
 </body>
+
 </html>

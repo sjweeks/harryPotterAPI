@@ -1,5 +1,16 @@
 <div class="contentContainer">
-    <h1>Harry Potter API</h1>
-
-    <ul></ul>
+    <h1>Sorting Hat</h1>
+    <ul>
+        {{#each data}}
+        <li>{{@key}} : {{this}}</li>
+        {{/each}}
+    </ul>
+    <br>
+    <br>
+    <form action="/sortingHat" method="POST">
+        <input class="inputSections" type="text" name="characterName" placeholder="Enter Character Name">
+        <br>
+        <br>
+        <input class="inputButton" type="submit" value="Submit">
+    </form>
 </div>
