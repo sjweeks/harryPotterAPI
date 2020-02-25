@@ -44,7 +44,8 @@ a{
 }
 
 li :hover{
-    background-color: darkgrey;
+    background-color: #D3A625;
+    padding: 4px;
 }
 
 .inputSections{
@@ -73,10 +74,31 @@ li :hover{
     opacity: 0.2;
 }
 
-/* #logo{
-    height: 100px;
+.signup{
+    /* height: 50px;
+    width: 100px; */
+}
+
+.signup :hover{
+    background-color: whitesmoke;
+    padding: 16px 10px;
+    /* height: 500px;
+    width: 100px; */
+}
+
+.login{
+    display: flex;
+    flex-direction: column;
+}
+
+.emailAddress, .password{
+    background-color: #740001;
+    color: whitesmoke;
+    opacity: 0.5;
+    height: 35px;
     width: 300px;
-} */
+    padding: 3px;
+}
 
 .headerContainer{
     display: flex;

@@ -1,0 +1,25 @@
+<div class="contentContainer">
+    <h1>Log-in</h1>
+    <ul>
+        {{#each data}}
+        <li>{{@key}} : {{this}}</li>
+        {{/each}}
+    </ul>
+    <br>
+    <div class="login">
+        <form action="/login" method="POST">
+            <div>
+                <input class="emailAddress" type="text" name="email" placeholder="Enter Email">
+            </div>
+            <div>
+                <input class="password" type="text" name="password" placeholder="Enter Password">
+            </div>
+
+            <br>
+            <br>
+            <input class="inputButton" type="submit" value="Submit">
+        </form>
+    </div><br>
+
+
+</div>
