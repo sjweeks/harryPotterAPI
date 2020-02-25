@@ -3,10 +3,17 @@ const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 const fs = require("fs");
+const mongoose = require('mongoose');
+const UserSchema = require('./models/user');
 
 const app = express();
 
 const harryPotterData = require("./lib/harryPotter");
+
+mongoose.connect('mongodb+srv://sarahweeks:codenation@usersignup-teuih.mongodb.net/userdb?retryWrites=true&w=majority', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -21,89 +28,89 @@ app.engine(
 );
 app.set("view engine", ".hbs");
 
-app.get('/characters', async (req, res) => {
-    let data = await harryPotterData();
-    // console.log(data);
-
-    // fs.writeFileSync("harryPotter.json", data)
-
-    let name = data.name;
-    let role = data.role;
-    let house = data.house;
-    let animagus = data.animagus;
-    let ministryOfMagic = data.ministryOfMagic;
-    let orderOfThePhoenix = data.orderOfThePhoenix;
-    let dumbledoresArmy = data.dumbledoresArmy;
-    let deathEater = data.deathEater;
-    let bloodStatus = data.bloodStatus;
-
-    // let house = data.house;
-    // console.log(name);
-    // console.log(role);
-    // console.log(house);
-    // console.log(animagus);
-    // console.log(ministryOfMagic);
-    // console.log(orderOfThePhoenix);
-    // console.log(dumbledoresArmy);
-    // console.log(deathEater);
-    // console.log(bloodStatus);
-
-    
-    res.render('characters');
+app.get("/", async (req, res) => {
+  res.render("index");
 });
 
-app.get('/login', async(req, res) => {
-    res.render('login');
-  })
+app.get('/characters', async (req, res) => {
+  // let data = await harryPotterData();
+  // console.log(data);
 
-  app.get('/signup', async(req, res) => {
-    res.render('signup');
-  })
+  // fs.writeFileSync("harryPotter.json", data)
 
-app.get('/', async(req, res) => {
-    res.render('index');
-  })
+  // let name = data.name;
+  // let role = data.role;
+  // let house = data.house;
+  // let animagus = data.animagus;
+  // let ministryOfMagic = data.ministryOfMagic;
+  // let orderOfThePhoenix = data.orderOfThePhoenix;
+  // let dumbledoresArmy = data.dumbledoresArmy;
+  // let deathEater = data.deathEater;
+  // let bloodStatus = data.bloodStatus;
 
-app.get('/sortingHat', async(req, res) => {
-  res.render('sortingHat');
-})
+  // let house = data.house;
+  // console.log(name);
+  // console.log(role);
+  // console.log(house);
+  // console.log(animagus);
+  // console.log(ministryOfMagic);
+  // console.log(orderOfThePhoenix);
+  // console.log(dumbledoresArmy);
+  // console.log(deathEater);
+  // console.log(bloodStatus);
 
-app.get('/spells', async(req, res) => {
-  res.render('spells');
-})
+  res.render("characters");
+});
 
+app.get("/sortingHat", async (req, res) => {
+  res.render("sortingHat");
+});
 
-app.post("/characters", async (req,res) => {
-    let character = req.body.character;
-    console.log(character);
+app.get("/spells", async (req, res) => {
+  res.render("spells");
+});
 
-    let data = await harryPotterData();
+app.get("/login", async (req, res) => {
+  res.render("login");
+});
 
-    let name = data.name;
-    let role = data.role;
-    let house = data.house;
-    let animagus = data.animagus;
-    let ministryOfMagic = data.ministryOfMagic;
-    let orderOfThePhoenix = data.orderOfThePhoenix;
-    let dumbledoresArmy = data.dumbledoresArmy;
-    let deathEater = data.deathEater;
-    let bloodStatus = data.bloodStatus;
+app.get("/signup", async (req, res) => {
+  res.render("signup");
+});
 
-    res.render("characters", {data: {
+app.post('/characters', async (req, res) => {
+  let characterChosen = encodeURIComponent(req.body.character);
+  console.log(characterChosen);
 
-        name,
-        role,
-        house,
-        animagus,
-        ministryOfMagic,
-        orderOfThePhoenix,
-        dumbledoresArmy,
-        deathEater,
-        bloodStatus,
-    }})
+  let data = await harryPotterData(characterChosen);
+  console.log(data);
 
-})
+  let name = data.name;
+  let role = data.role;
+  let house = data.house;
+  let animagus = data.animagus;
+  let ministryOfMagic = data.ministryOfMagic;
+  let orderOfThePhoenix = data.orderOfThePhoenix;
+  let dumbledoresArmy = data.dumbledoresArmy;
+  let deathEater = data.deathEater;
+  let bloodStatus = data.bloodStatus;
+
+  // console.log(name);
+
+  res.render('characters', {data: {
+      name,
+      role,
+      house,
+      animagus,
+      ministryOfMagic,
+      orderOfThePhoenix,
+      dumbledoresArmy,
+      deathEater,
+      bloodStatus
+    }
+  });
+});
 
 app.listen(3004, () => {
-    console.log("server listening on 3004");
-  });
+  console.log("server listening on 3004");
+});

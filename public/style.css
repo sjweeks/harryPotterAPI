@@ -73,11 +73,10 @@ li :hover{
     opacity: 0.2;
 }
 
-#logo{
+/* #logo{
     height: 100px;
     width: 300px;
-
-}
+} */
 
 .headerContainer{
     display: flex;
