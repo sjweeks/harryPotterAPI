@@ -8,6 +8,8 @@ const UserSchema = require("./models/user");
 
 const app = express();
 
+const getUsers = require("./lib/getUsers")
+
 const harryPotterData = require("./lib/harryPotter");
 
 mongoose.connect(
@@ -201,16 +203,28 @@ app.get("/login", async (req, res) => {
   res.render("login");
 });
 
-app.post("/login", (req, res) => {
-  let email = req.body.email;
+app.post("/login", async (req, res) => {
+  let username = req.body.username;
   let password = req.body.password;
 
+  let docs = await getUsers(username);
+
+  if (docs.length > 0){
+    res.render("login", {
+      err: "A user with this Username already exists"
+    })
+    return;
+  }
+
+  // console.log(docs);
+  
   const user = new UserSchema({
-    email: email,
+    username: username,
     password: password
   });
   user.save();
-  console.log(user);
+
+  // console.log(user);
 
   res.render("login");
 });
