@@ -1,3 +1,17 @@
+/* @import url('https://fonts.googleapis.com/css?family=Tangerine&display=swap'); */
+/* @import url('') */
+
+@font-face {
+    font-family: 'bluu';
+    /* src: url('bluunext-bold-webfont.woff2') format('woff2'),
+         url('bluunext-bold-webfont.woff') format('woff'),
+         url('bluunext-bold.ttf') format('truetype'),
+         url('bluunext-bold-webfont.svg#bluu_nextbold') format('svg'); */
+         src: url(../Fonts/BluuNext-Bolditalic.otf);
+    /* font-weight: normal;
+    font-style: normal; */
+}
+
 body{
     background-color: #873336;
     margin: 0;
@@ -14,6 +28,7 @@ body{
 }
 
 h1{
+    font-family: bluu;
     color: whitesmoke;
 }
 
@@ -29,7 +44,8 @@ h3{
     display: flex;
     flex-direction: column; 
     padding: 140px 20px 0 0px;
-}
+    /* font-family: bluu; */
+} 
 
 li{
     text-decoration: none;
@@ -75,8 +91,8 @@ li :hover{
 }
 
 .signup{
-    /* height: 50px;
-    width: 100px; */
+    height: 50px;
+    width: 100px;
 }
 
 .signup :hover{

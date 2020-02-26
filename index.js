@@ -51,41 +51,6 @@ app.get("/characters", async (req, res) => {
   res.render("characters");
 });
 
-app.get("/sortingHat", async (req, res) => {
-  let data = await harryPotterData.sortingHatData();
-  console.log(data);
-
-  // fs.writeFileSync("houseData.json", data)
-
-  res.render("sortingHat");
-});
-
-app.get("/spells", async (req, res) => {
-  res.render("spells");
-});
-
-app.get("/login", async (req, res) => {
-  res.render("login");
-});
-
-app.get("/signup", async (req, res) => {
-  res.render("signup");
-});
-
-app.post("/login", (req, res) => {
-  let email = req.body.email;
-  let password = req.body.password;
-
-  const user = new UserSchema({
-    email: email,
-    password: password
-  });
-  user.save();
-  console.log(user);
-
-  res.render("login") 
-});
-
 app.post("/characters", async (req, res) => {
   let characterChosen = encodeURIComponent(req.body.character);
   console.log(characterChosen);
@@ -109,13 +74,16 @@ app.post("/characters", async (req, res) => {
     let role = data[0].role;
     let house = data[0].house;
     let animagus = data[0].animagus;
+    let wand = data[0].wand;
     let ministryOfMagic = data[0].ministryOfMagic;
     let orderOfThePhoenix = data[0].orderOfThePhoenix;
     let dumbledoresArmy = data[0].dumbledoresArmy;
     let deathEater = data[0].deathEater;
     let bloodStatus = data[0].bloodStatus;
 
-    // console.log(name);
+  //   if (data[0].house == "Gryffindor") {
+  //     console.log("Hello, Gryffindor");
+  // }
 
     res.render("characters", {
       data: {
@@ -123,6 +91,7 @@ app.post("/characters", async (req, res) => {
         role,
         house,
         animagus,
+        wand,
         ministryOfMagic,
         orderOfThePhoenix,
         dumbledoresArmy,
@@ -135,6 +104,100 @@ app.post("/characters", async (req, res) => {
   //   err: 'no character found'
   // })
 });
+
+app.get("/sortingHat", async (req, res) => {
+  // let data = await harryPotterData.sortingHatData();
+  // console.log(data);
+
+  // fs.writeFileSync("houseData.json", data)
+
+  res.render("sortingHat");
+});
+
+app.post("/sortingHat", async (req, res) => {
+  let houseDisplayed = encodeURIComponent(req.body.houses);
+  console.log(houseDisplayed);
+
+  let data = await harryPotterData.sortingHatData();
+  console.log(data);
+
+  if (data[0]) {
+    let name = data[0].name;
+    let mascot = data[0].mascot;
+    let headOfHouse = data[0].headOfHouse;
+    let houseGhost = data[0].houseGhost;
+    let founder = data[0].founder;
+
+    console.log(founder);
+    
+    res.render("sortingHat", {
+      data: {
+        name,
+        mascot,
+        headOfHouse,
+        houseGhost,
+        founder
+      }
+    });
+  }
+});
+
+app.get("/spells", async (req, res) => {
+  // let data = await harryPotterData.spellData();
+  // console.log(data);
+
+  // fs.writeFileSync("spellData.json", data)
+
+  res.render("spells");
+});
+
+app.post("/spells", async(req, res) => {
+  let spellChosen = encodeURIComponent(req.body.spells)
+  let data = await harryPotterData.spellData(spellChosen);
+  // console.log(data);
+
+
+
+
+  
+  if (data[0]) {
+    let spells = data[0].spell;
+    let type = data[0].type;
+    let effect = data[0].effect;
+    
+    res.render("spells", {
+      data: {
+        spells,
+        type,
+        effect
+      }
+    });
+  }
+});
+
+app.get("/signup", async (req, res) => {
+  res.render("signup");
+});
+
+app.get("/login", async (req, res) => {
+  res.render("login");
+});
+
+
+app.post("/login", (req, res) => {
+  let email = req.body.email;
+  let password = req.body.password;
+
+  const user = new UserSchema({
+    email: email,
+    password: password
+  });
+  user.save();
+  console.log(user);
+
+  res.render("login");
+});
+
 
 app.listen(3004, () => {
   console.log("server listening on 3004");
