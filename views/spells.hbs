@@ -1,14 +1,14 @@
 <div class="contentContainer">
     <h1>Spells</h1>
     <ul>
-        {{#each data}}
+        {{#each spell}}
         <li>{{@key}} : {{this}}</li>
         {{/each}}
     </ul>
     <br>
     <br>
     <form action="/spells" method="POST">
-        <input class="inputSections" type="text" name="characterName" placeholder="Enter Spell Name">
+        <input class="inputSections" type="text" name="spells" placeholder="Enter Spell Name">
         <br>
         <br>
         <input class="inputButton" type="submit" value="Submit">

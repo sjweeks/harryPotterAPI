@@ -1,0 +1,19 @@
+<div class="contentContainer">
+    <h1>Houses</h1>
+    {{!-- {{#if err}}
+    <p>{{err}}</p>
+    {{else}} --}}
+    <ul>
+        {{#each house}}
+        <li>{{@key}} : {{this}}</li>
+        {{/each}}
+    </ul>
+    <br>
+    <br>
+    <form action="/houses" method="POST">
+        <input class="inputSections" type="text" name="houses" placeholder="Enter House Name">
+        <br>
+        <br>
+        <input class="inputButton" type="submit" value="Submit">
+    </form>
+</div>

@@ -39,10 +39,6 @@ app.engine(
 );
 app.set("view engine", ".hbs");
 
-// app.get("/", async (req, res) => {
-//   res.render("index");
-// });
-
 app.get("/", (req, res) => {
   res.render("index");
 });
@@ -81,9 +77,9 @@ app.post("/characters", async (req, res) => {
     let deathEater = data[0].deathEater;
     let bloodStatus = data[0].bloodStatus;
 
-  //   if (data[0].house == "Gryffindor") {
-  //     console.log("Hello, Gryffindor");
-  // }
+    //   if (data[0].house == "Gryffindor") {
+    //     console.log("Hello, Gryffindor");
+    // }
 
     res.render("characters", {
       data: {
@@ -105,6 +101,46 @@ app.post("/characters", async (req, res) => {
   // })
 });
 
+app.get("/houses", async (req, res) => {
+  res.render("houses");
+});
+
+app.post("/houses", async (req, res) => {
+  let input = encodeURIComponent(req.body.houses);
+
+  let data = await harryPotterData.houseData();
+  // console.log(data);
+
+  let houses = [];
+
+  for (const item of data) {
+    houses.push({
+      name: item.name,
+      mascot: item.mascot,
+      headOfHouse: item.headOfHouse,
+      houseGhost: item.houseGhost,
+      founder: item.founder,
+      values: item.values
+    });
+  }
+
+  for (const house of houses) {
+    if (house.name == input) {
+      res.render("houses", {
+        house
+      });
+      return;
+    }
+  }
+
+  // console.log(houses);
+  
+
+  res.render("houses", {
+    err: "Error."
+  });
+});
+
 app.get("/sortingHat", async (req, res) => {
   // let data = await harryPotterData.sortingHatData();
   // console.log(data);
@@ -115,64 +151,46 @@ app.get("/sortingHat", async (req, res) => {
 });
 
 app.post("/sortingHat", async (req, res) => {
-  let houseDisplayed = encodeURIComponent(req.body.houses);
-  console.log(houseDisplayed);
+  // let houseDisplayed = encodeURIComponent(req.body.houses);
+  // console.log(houseDisplayed);
 
-  let data = await harryPotterData.sortingHatData();
-  console.log(data);
-
-  if (data[0]) {
-    let name = data[0].name;
-    let mascot = data[0].mascot;
-    let headOfHouse = data[0].headOfHouse;
-    let houseGhost = data[0].houseGhost;
-    let founder = data[0].founder;
-
-    console.log(founder);
-    
-    res.render("sortingHat", {
-      data: {
-        name,
-        mascot,
-        headOfHouse,
-        houseGhost,
-        founder
-      }
-    });
-  }
+  // let data = await harryPotterData.sortingHatData();
+  // console.log(data);
 });
 
 app.get("/spells", async (req, res) => {
-  // let data = await harryPotterData.spellData();
-  // console.log(data);
-
-  // fs.writeFileSync("spellData.json", data)
-
   res.render("spells");
 });
 
-app.post("/spells", async(req, res) => {
-  let spellChosen = encodeURIComponent(req.body.spells)
-  let data = await harryPotterData.spellData(spellChosen);
+app.post("/spells", async (req, res) => {
+  let input = encodeURIComponent(req.body.spells);
+  let data = await harryPotterData.spellData(input);
   // console.log(data);
 
+  let spells = [];
 
-
-
-  
-  if (data[0]) {
-    let spells = data[0].spell;
-    let type = data[0].type;
-    let effect = data[0].effect;
-    
-    res.render("spells", {
-      data: {
-        spells,
-        type,
-        effect
-      }
+  for (const item of data) {
+    spells.push({
+      spell: item.spell,
+      type: item.type,
+      effect: item.effect
     });
   }
+
+  for (const spell of spells) {
+    if (spell.spell == input) {
+      res.render("spells", {
+        spell
+      });
+      return;
+    }
+  }
+
+  // console.log(spells);
+
+  res.render("spells", {
+    err: "Error."
+  });
 });
 
 app.get("/signup", async (req, res) => {
@@ -182,7 +200,6 @@ app.get("/signup", async (req, res) => {
 app.get("/login", async (req, res) => {
   res.render("login");
 });
-
 
 app.post("/login", (req, res) => {
   let email = req.body.email;
@@ -197,7 +214,6 @@ app.post("/login", (req, res) => {
 
   res.render("login");
 });
-
 
 app.listen(3004, () => {
   console.log("server listening on 3004");
