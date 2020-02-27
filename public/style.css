@@ -20,14 +20,25 @@ body{
 .homePage{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    /* justify-content: center; */
 }
 
-/* .container{
-    padding: 50px 600px 0 0;
-} */
+.contentContainerTwo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+    height: 300px;
+    padding: 10px 20px 10px 30px;
+    box-sizing: border-box;
+    background-color: whitesmoke;
+    opacity: 0.7;
+    border-radius: 60px;
+}
 
 .contentContainer{
+    /* opacity: 0.8; */
     width: 100%;
     padding: 50px 600px 0 0;
 }
@@ -35,6 +46,11 @@ body{
 h1{
     font-family: bluu;
     color: whitesmoke;
+}
+
+.sortingHeader{
+    font-family: bluu;
+    color: #873336;
 }
 
 h2{
@@ -45,10 +61,15 @@ h3{
     color: whitesmoke;
 }
 
+p{
+    font-size: 20px;
+}
+
 .navBar{
     display: flex;
     flex-direction: column; 
-    padding: 140px 20px 0 0px;
+    width: 400px;
+    padding: 140px 20px 0 20px;
     /* font-family: bluu; */
 } 
 
@@ -125,17 +146,43 @@ li :hover{
     display: flex;
     justify-content: flex-end;
     background-color: black;
-    opacity: 0.6;
-    height: 60px;
+    opacity: 0.5;
+    height: 70px;
     padding: 2px 30px 2px 0;
 }
 
 .images{
     display: flex;
     justify-content: flex-end;
-    padding: 20px 300px 10px 0;
+    padding: 20px 50px 10px 0;
+}
+.houseImage{
+    display: flex;
+    justify-content: center;
+    padding: 10px 50px 10px 0;
 }
 
 .sortingHat{
     padding: 0 0 0 20px;
+    width: 100%;
+}
+
+.Gryffindor{
+    color: #400504;
+}
+
+.Slytherin{
+    color: #2B8307;
+}
+.Ravenclaw{
+    color: #006BFF;
+}
+.Hufflepuff{
+    color: #ECD80D;
+}
+
+.hogwarts{
+    width: 140px;
+    height: 60px;
+    /* color: black; */
 }

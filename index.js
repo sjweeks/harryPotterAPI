@@ -72,10 +72,6 @@ app.post("/characters", async (req, res) => {
     let deathEater = data[0].deathEater;
     let bloodStatus = data[0].bloodStatus;
 
-    //   if (data[0].house == "Gryffindor") {
-    //     console.log("Hello, Gryffindor");
-    // }
-
     res.render("characters", {
       data: {
         name,
@@ -137,19 +133,17 @@ app.post("/houses", async (req, res) => {
 });
 
 app.get("/sortingHat", async (req, res) => {
-  // let data = await harryPotterData.sortingHatData();
-  // console.log(data);
-
-  // fs.writeFileSync("houseData.json", data)
-
   res.render("sortingHat");
 });
 
 app.post("/sortingHat", async (req, res) => {
-  // let houseDisplayed = encodeURIComponent(req.body.houses);
-  // console.log(houseDisplayed);
-  // let data = await harryPotterData.sortingHatData();
+  let house = await harryPotterData.sortingHatData();
   // console.log(data);
+
+  res.render("sortingHat", {
+    house,
+    title: `I know..... ${house}!!`
+  });
 });
 
 app.get("/spells", async (req, res) => {
@@ -227,14 +221,12 @@ app.post("/login", async (req, res) => {
   if (docs.length > 0 && verify.length > 0) {
     res.render("account");
     return;
-  } 
-  else if (docs.length > 0 || verify.length > 0) {
+  } else if (docs.length > 0 || verify.length > 0) {
     res.render("login", {
       err: "Username or Password incorrect"
     });
     return;
-  } 
-  else {
+  } else {
     res.render("signup", {
       err: "Create an account"
     });
