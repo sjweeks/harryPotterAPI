@@ -142,7 +142,7 @@ app.post("/sortingHat", async (req, res) => {
 
   res.render("sortingHat", {
     house,
-    title: `I know..... ${house}!!`
+    title: `${house}!!`
   });
 });
 
@@ -186,6 +186,8 @@ app.get("/signup", async (req, res) => {
 app.post("/signup", async (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
+  let name = req.body.name;
+  let email = req.body.email;
 
   let docs = await getInfo.getUsers(username);
 
@@ -200,11 +202,16 @@ app.post("/signup", async (req, res) => {
 
   const user = new UserSchema({
     username: username,
-    password: password
+    password: password,
+    name: name,
+    email: email,
   });
   user.save();
 
-  res.render("account");
+  res.render("account", {
+    name,
+    username
+  });
 });
 
 app.get("/login", async (req, res) => {
@@ -219,7 +226,10 @@ app.post("/login", async (req, res) => {
   let verify = await getInfo.getPassword(password);
 
   if (docs.length > 0 && verify.length > 0) {
-    res.render("account");
+    res.render("account", {
+      name, 
+      username,
+    });
     return;
   } else if (docs.length > 0 || verify.length > 0) {
     res.render("login", {

@@ -58,11 +58,12 @@ h2{
 }
 
 h3{
-    color: whitesmoke;
+    color: dimgray;
 }
 
 p{
     font-size: 20px;
+    color: #D3A625;
 }
 
 .navBar{
