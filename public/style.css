@@ -90,6 +90,10 @@ li :hover{
     background-color: #D3A625;
     padding: 4px;
 }
+.logout :hover{
+    background-color: #D3A625;
+    padding: 15px;
+}
 
 .inputSections{
     background-color: #740001;

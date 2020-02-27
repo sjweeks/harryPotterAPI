@@ -186,7 +186,7 @@ app.get("/signup", async (req, res) => {
 app.post("/signup", async (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
-  let name = req.body.name;
+  let usersName = req.body.name;
   let email = req.body.email;
 
   let docs = await getInfo.getUsers(username);
@@ -203,13 +203,13 @@ app.post("/signup", async (req, res) => {
   const user = new UserSchema({
     username: username,
     password: password,
-    name: name,
+    name: usersName,
     email: email,
   });
   user.save();
 
   res.render("account", {
-    name,
+    usersName,
     username
   });
 });
@@ -221,13 +221,23 @@ app.get("/login", async (req, res) => {
 app.post("/login", async (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
+  // let name = req.body.name;
 
   let docs = await getInfo.getUsers(username);
   let verify = await getInfo.getPassword(password);
+  let usersName = await getInfo.getName();
+
+  // let name = []
+
+  // for (const item of usersName) {
+  //   name.push({
+  //     name: item.name,
+  //   });
+  // }
 
   if (docs.length > 0 && verify.length > 0) {
     res.render("account", {
-      name, 
+      usersName, 
       username,
     });
     return;
