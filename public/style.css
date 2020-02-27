@@ -23,7 +23,12 @@ body{
     justify-content: space-between;
 }
 
-.container{
+/* .container{
+    padding: 50px 600px 0 0;
+} */
+
+.contentContainer{
+    width: 100%;
     padding: 50px 600px 0 0;
 }
 
@@ -107,7 +112,7 @@ li :hover{
     flex-direction: column;
 }
 
-.emailAddress, .password{
+.username, .password, .name{
     background-color: #740001;
     color: whitesmoke;
     opacity: 0.5;
@@ -123,4 +128,14 @@ li :hover{
     opacity: 0.6;
     height: 60px;
     padding: 2px 30px 2px 0;
+}
+
+.images{
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px 300px 10px 0;
+}
+
+.sortingHat{
+    padding: 0 0 0 20px;
 }

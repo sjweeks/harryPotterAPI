@@ -8,7 +8,7 @@ const UserSchema = require("./models/user");
 
 const app = express();
 
-const getUsers = require("./lib/getUsers")
+const getInfo = require("./lib/getUsers");
 
 const harryPotterData = require("./lib/harryPotter");
 
@@ -23,14 +23,6 @@ mongoose.connect(
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-// let email = req.body.email
-// let password = req.body.password
-
-// const user = new UserSchema({
-//   email: email,
-//   password: password
-// })
 
 app.engine(
   ".hbs",
@@ -71,6 +63,7 @@ app.post("/characters", async (req, res) => {
     let name = data[0].name;
     let role = data[0].role;
     let house = data[0].house;
+    let alias = data[0].alias;
     let animagus = data[0].animagus;
     let wand = data[0].wand;
     let ministryOfMagic = data[0].ministryOfMagic;
@@ -88,6 +81,7 @@ app.post("/characters", async (req, res) => {
         name,
         role,
         house,
+        alias,
         animagus,
         wand,
         ministryOfMagic,
@@ -98,9 +92,9 @@ app.post("/characters", async (req, res) => {
       }
     });
   }
-  // res.render('characters', {
-  //   err: 'no character found'
-  // })
+  // res.render("characters", {
+  //   err: "no character found"
+  // });
 });
 
 app.get("/houses", async (req, res) => {
@@ -136,7 +130,6 @@ app.post("/houses", async (req, res) => {
   }
 
   // console.log(houses);
-  
 
   res.render("houses", {
     err: "Error."
@@ -155,7 +148,6 @@ app.get("/sortingHat", async (req, res) => {
 app.post("/sortingHat", async (req, res) => {
   // let houseDisplayed = encodeURIComponent(req.body.houses);
   // console.log(houseDisplayed);
-
   // let data = await harryPotterData.sortingHatData();
   // console.log(data);
 });
@@ -188,8 +180,6 @@ app.post("/spells", async (req, res) => {
     }
   }
 
-  // console.log(spells);
-
   res.render("spells", {
     err: "Error."
   });
@@ -197,6 +187,30 @@ app.post("/spells", async (req, res) => {
 
 app.get("/signup", async (req, res) => {
   res.render("signup");
+});
+
+app.post("/signup", async (req, res) => {
+  let username = req.body.username;
+  let password = req.body.password;
+
+  let docs = await getInfo.getUsers(username);
+
+  if (docs.length > 0) {
+    res.render("signup", {
+      err: "A user with this Username already exists"
+    });
+    return;
+  }
+
+  console.log(docs);
+
+  const user = new UserSchema({
+    username: username,
+    password: password
+  });
+  user.save();
+
+  res.render("account");
 });
 
 app.get("/login", async (req, res) => {
@@ -207,26 +221,32 @@ app.post("/login", async (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
 
-  let docs = await getUsers(username);
+  let docs = await getInfo.getUsers(username);
+  let verify = await getInfo.getPassword(password);
 
-  if (docs.length > 0){
+  if (docs.length > 0 && verify.length > 0) {
+    res.render("account");
+    return;
+  } 
+  else if (docs.length > 0 || verify.length > 0) {
     res.render("login", {
-      err: "A user with this Username already exists"
-    })
+      err: "Username or Password incorrect"
+    });
+    return;
+  } 
+  else {
+    res.render("signup", {
+      err: "Create an account"
+    });
     return;
   }
-
   // console.log(docs);
-  
-  const user = new UserSchema({
-    username: username,
-    password: password
-  });
-  user.save();
 
-  // console.log(user);
+  // res.render("account");
+});
 
-  res.render("login");
+app.get("/account", async (req, res) => {
+  res.render("account");
 });
 
 app.listen(3004, () => {

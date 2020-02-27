@@ -1,0 +1,31 @@
+<div class="contentContainer">
+    <h1>Sign Up</h1>
+    <ul>
+        {{#each data}}
+        <li>{{@key}} : {{this}}</li>
+        {{/each}}
+    </ul>
+    <br>
+    <div class="login">
+        <form action="/signup" method="POST">
+            <div>
+                <input class="name" type="text" name="name" placeholder="Enter Name">
+                <input class="username" type="email" name="email" placeholder="Enter Valid Email">
+            </div>
+            <br>
+            <div>
+                <input class="username" type="text" name="username" placeholder="Create Username">
+            {{!-- </div>
+            <br>
+            <div> --}}
+                <input class="password" type="password" name="password" placeholder="Create Password">
+            </div>
+
+            <br>
+            <br>
+            <input class="inputButton" type="submit" value="Submit">
+        </form>
+    </div><br>
+    <h3>{{err}}</h3>
+
+</div>
