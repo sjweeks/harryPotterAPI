@@ -92,7 +92,7 @@ li :hover{
 }
 .logout :hover{
     background-color: #D3A625;
-    padding: 15px;
+    padding: 10px;
 }
 
 .inputSections{
@@ -164,6 +164,12 @@ li :hover{
 .houseImage{
     display: flex;
     justify-content: center;
+    padding: 10px 50px 10px 0;
+}
+
+.spellImage{
+    display: flex;
+    /* justify-content: center; */
     padding: 10px 50px 10px 0;
 }
 

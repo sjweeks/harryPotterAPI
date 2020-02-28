@@ -2,13 +2,17 @@ const hbs = require("express-handlebars");
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
+const nanoID = require("nanoid");
 const fs = require("fs");
 const mongoose = require("mongoose");
+const session = require("express-session");
+const MongoStore = require("connect-mongo")(session);
 const UserSchema = require("./models/user");
 
 const app = express();
 
 const getInfo = require("./lib/getUsers");
+// const getSession = require("./lib/getSession")
 
 const harryPotterData = require("./lib/harryPotter");
 
@@ -186,7 +190,7 @@ app.get("/signup", async (req, res) => {
 app.post("/signup", async (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
-  let usersName = req.body.name;
+  let name = req.body.name;
   let email = req.body.email;
 
   let docs = await getInfo.getUsers(username);
@@ -203,13 +207,13 @@ app.post("/signup", async (req, res) => {
   const user = new UserSchema({
     username: username,
     password: password,
-    name: usersName,
-    email: email,
+    name: name,
+    email: email
   });
   user.save();
 
   res.render("account", {
-    usersName,
+    name,
     username
   });
 });
@@ -221,29 +225,54 @@ app.get("/login", async (req, res) => {
 app.post("/login", async (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
-  // let name = req.body.name;
+  let name = username.name;
 
   let docs = await getInfo.getUsers(username);
   let verify = await getInfo.getPassword(password);
-  let usersName = await getInfo.getName();
+  let usersName = await getInfo.getName(req.name);
+  // console.log(usersName);
 
-  // let name = []
+  let names = [];
 
-  // for (const item of usersName) {
-  //   name.push({
-  //     name: item.name,
-  //   });
+  for (const item of docs) {
+    names.push({
+      username: item.username,
+      name: item.usersName
+    });
+  }
+
+  // console.log(names);
+
+  if (names[0]) {
+    let name = names[0].name;
+  }
+
+  // let name = names[0].name;
+  // let username = names[0].username;
+
+  // res.render("account", {
+  //   name,
+  //   username
+  // })
+
+  // for (const username of names) {
+  //   if (name.username == username) {
+  //     res.render("login", {
+  //       names
+  //     });
+  //     return;
+  //   }
   // }
 
   if (docs.length > 0 && verify.length > 0) {
     res.render("account", {
-      usersName, 
-      username,
+      usersName,
+      username
     });
     return;
   } else if (docs.length > 0 || verify.length > 0) {
     res.render("login", {
-      err: "Username or Password incorrect"
+      err: "Username or Password incorrect - try again"
     });
     return;
   } else {
