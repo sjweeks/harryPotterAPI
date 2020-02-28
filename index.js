@@ -12,7 +12,7 @@ const UserSchema = require("./models/user");
 const app = express();
 
 const getInfo = require("./lib/getUsers");
-// const getSession = require("./lib/getSession")
+const getSession = require("./lib/getSession")
 
 const harryPotterData = require("./lib/harryPotter");
 
@@ -22,6 +22,21 @@ mongoose.connect(
     useNewUrlParser: true,
     useUnifiedTopology: true
   }
+);
+
+app.use(
+  session({
+    store: new MongoStore({
+      url: `mongodb+srv://${process.env.username}:${process.env.password}@usersignup-teuih.mongodb.net/userdb?retryWrites=true&w=majority`
+    }),
+    secret: "keyboardcat",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 2,
+      sameSite: true
+    }
+  })
 );
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -42,7 +57,15 @@ app.get("/", (req, res) => {
 });
 
 app.get("/characters", async (req, res) => {
-  res.render("characters");
+  let loggedIN = await getSession(req.session.userID);
+
+  if (loggedIN){
+      res.render("characters", {
+      })
+  } else {
+      res.render("login")
+  }
+  // res.render("characters");
 });
 
 app.post("/characters", async (req, res) => {
@@ -98,7 +121,15 @@ app.post("/characters", async (req, res) => {
 });
 
 app.get("/houses", async (req, res) => {
-  res.render("houses");
+  let loggedIN = await getSession(req.session.userID);
+
+  if (loggedIN){
+      res.render("houses", {
+      })
+  } else {
+      res.render("login")
+  }
+  // res.render("houses");
 });
 
 app.post("/houses", async (req, res) => {
@@ -137,7 +168,15 @@ app.post("/houses", async (req, res) => {
 });
 
 app.get("/sortingHat", async (req, res) => {
-  res.render("sortingHat");
+  let loggedIN = await getSession(req.session.userID);
+
+  if (loggedIN){
+      res.render("sortingHat", {
+      })
+  } else {
+      res.render("login")
+  }
+  // res.render("sortingHat");
 });
 
 app.post("/sortingHat", async (req, res) => {
@@ -151,7 +190,15 @@ app.post("/sortingHat", async (req, res) => {
 });
 
 app.get("/spells", async (req, res) => {
-  res.render("spells");
+  let loggedIN = await getSession(req.session.userID);
+
+  if (loggedIN){
+      res.render("spells", {
+      })
+  } else {
+      res.render("login")
+  }
+  // res.render("spells");
 });
 
 app.post("/spells", async (req, res) => {
@@ -211,6 +258,11 @@ app.post("/signup", async (req, res) => {
     email: email
   });
   user.save();
+  req.session.userID = nanoID();
+  req.session.name = req.body.name;
+  req.session.save();
+  // console.log("Session created");
+  
 
   res.render("account", {
     name,
@@ -219,7 +271,17 @@ app.post("/signup", async (req, res) => {
 });
 
 app.get("/login", async (req, res) => {
-  res.render("login");
+  let username = req.body.username;
+  let loggedIN = await getSession(req.session.userID);
+
+  if (loggedIN){
+      res.render("account", {
+        // name, 
+        username
+      })
+  } else {
+      res.render("login")
+  }
 });
 
 app.post("/login", async (req, res) => {
@@ -247,24 +309,10 @@ app.post("/login", async (req, res) => {
     let name = names[0].name;
   }
 
-  // let name = names[0].name;
-  // let username = names[0].username;
-
-  // res.render("account", {
-  //   name,
-  //   username
-  // })
-
-  // for (const username of names) {
-  //   if (name.username == username) {
-  //     res.render("login", {
-  //       names
-  //     });
-  //     return;
-  //   }
-  // }
-
   if (docs.length > 0 && verify.length > 0) {
+    req.session.userID = nanoID();
+    req.session.name = req.body.name;
+    req.session.save();
     res.render("account", {
       usersName,
       username
@@ -288,6 +336,14 @@ app.post("/login", async (req, res) => {
 
 app.get("/account", async (req, res) => {
   res.render("account");
+});
+
+
+app.post("/logout", async (req, res) => {
+  req.session.destroy();
+  res.render("index", {
+    logout: "You have successfully logged out"
+  });
 });
 
 app.listen(3004, () => {
