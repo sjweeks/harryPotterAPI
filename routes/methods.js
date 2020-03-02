@@ -1,22 +1,31 @@
-let express = require("express");
-let router = express.Router();
+let {Router} = require("express");
+let router = Router();
 
-const getInfo = require("./lib/getUsers");
-const getSession = require("./lib/getSession");
+const hbs = require("express-handlebars");
+const path = require("path");
+const getInfo = require("../lib/getUsers");
+const getSession = require("../lib/getSession");
+const bodyParser = require("body-parser");
+const UserSchema = require("../models/user");
+const nanoID = require("nanoid");
+const mongoose = require("mongoose");
+const session = require("express-session");
+const MongoStore = require("connect-mongo")(session);
+const methods = require("../routes/methods");
 
-const harryPotterData = require("./lib/harryPotter");
+const harryPotterData = require("../lib/harryPotter");
 
 router.get("/", (req, res) => {
-  res.send("index");
+  res.render("index");
 });
 
 router.get("/characters", async (req, res) => {
   let loggedIN = await getSession(req.session.userID);
 
   if (loggedIN) {
-    res.send("characters", {});
+    res.render("characters", {});
   } else {
-    res.send("login");
+    res.render("login");
   }
   // res.render("characters");
 });
@@ -41,7 +50,7 @@ router.post("/characters", async (req, res) => {
     let deathEater = data[0].deathEater;
     let bloodStatus = data[0].bloodStatus;
 
-    res.send("characters", {
+    res.render("characters", {
       data: {
         name,
         role,
@@ -63,9 +72,9 @@ router.get("/houses", async (req, res) => {
   let loggedIN = await getSession(req.session.userID);
 
   if (loggedIN) {
-    res.send("houses", {});
+    res.render("houses", {});
   } else {
-    res.send("login");
+    res.render("login");
   }
   // res.render("houses");
 });
@@ -91,14 +100,14 @@ router.post("/houses", async (req, res) => {
 
   for (const house of houses) {
     if (house.name == input) {
-      res.send("houses", {
+      res.render("houses", {
         house
       });
       return;
     }
   }
 
-  res.send("houses", {
+  res.render("houses", {
     err: "Error."
   });
 });
@@ -107,9 +116,9 @@ router.get("/sortingHat", async (req, res) => {
   let loggedIN = await getSession(req.session.userID);
 
   if (loggedIN) {
-    res.send("sortingHat", {});
+    res.render("sortingHat", {});
   } else {
-    res.send("login");
+    res.render("login");
   }
   // res.render("sortingHat");
 });
@@ -118,7 +127,7 @@ router.post("/sortingHat", async (req, res) => {
   let house = await harryPotterData.sortingHatData();
   // console.log(data);
 
-  res.send("sortingHat", {
+  res.render("sortingHat", {
     house,
     title: `${house}!!`
   });
@@ -128,9 +137,9 @@ router.get("/spells", async (req, res) => {
   let loggedIN = await getSession(req.session.userID);
 
   if (loggedIN) {
-    res.send("spells", {});
+    res.render("spells", {});
   } else {
-    res.send("login");
+    res.render("login");
   }
 });
 
@@ -158,13 +167,13 @@ router.post("/spells", async (req, res) => {
     }
   }
 
-  res.send("spells", {
+  res.render("spells", {
     err: "Error."
   });
 });
 
 router.get("/signup", async (req, res) => {
-  res.send("signup");
+  res.render("signup");
 });
 
 router.post("/signup", async (req, res) => {
@@ -176,7 +185,7 @@ router.post("/signup", async (req, res) => {
   let docs = await getInfo.getUsers(username);
 
   if (docs.length > 0) {
-    res.send("signup", {
+    res.render("signup", {
       err: "A user with this Username already exists"
     });
     return;
@@ -196,7 +205,7 @@ router.post("/signup", async (req, res) => {
   req.session.save();
   // console.log("Session created");
 
-  res.send("account", {
+  res.render("account", {
     name,
     username
   });
@@ -208,12 +217,12 @@ router.get("/login", async (req, res) => {
   let usersName = await getInfo.getName(req.name);
 
   if (loggedIN) {
-    res.send("account", {
+    res.render("account", {
       name: usersName,
       username: username
     });
   } else {
-    res.send("login");
+    res.render("login");
   }
 });
 
@@ -242,18 +251,18 @@ router.post("/login", async (req, res) => {
     req.session.userID = nanoID();
     req.session.name = req.body.name;
     req.session.save();
-    res.send("account", {
+    res.render("account", {
       name,
       username
     });
     return;
   } else if (docs.length > 0 || verify.length > 0) {
-    res.send("login", {
+    res.render("login", {
       err: "Username or Password incorrect - try again"
     });
     return;
   } else {
-    res.send("signup", {
+    res.render("signup", {
       err: "Create an account"
     });
     return;
@@ -264,23 +273,23 @@ router.get("/account", async (req, res) => {
   let loggedIN = await getSession(req.session.userID);
 
   if (loggedIN) {
-    res.send("account", {
+    res.render("account", {
       name,
       username
     });
   } else {
-    res.send("login");
+    res.render("login");
   }
 });
 
 router.post("/account", (req, res) => {
-  res.send("account");
+  res.render("account");
 });
 
 router.post("/logout", async (req, res) => {
   req.session.destroy();
 
-  res.send("login", {
+  res.render("login", {
     logout: "You have successfully logged out"
   });
 });
