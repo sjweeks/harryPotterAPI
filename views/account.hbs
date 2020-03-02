@@ -1,10 +1,10 @@
 <div class="contentContainer">
     <h1>Account</h1>
-    {{!-- <ul>
-        {{#each data}}
+    <ul>
+        {{#each account}}
         <li>{{@key}} : {{this}}</li>
         {{/each}}
-    </ul> --}}
+    </ul>
     <br>
     <div>
         <p>Name: {{usersName}}</p>
@@ -20,7 +20,7 @@
         </div>
         <br>
         <form action="/logout" method="POST">
-            <input class="logout" type="submit" value="Log Out">
+            <input class="inputButton" type="submit" value="Log Out">
         </form>
         {{!-- <div>
             <ul>

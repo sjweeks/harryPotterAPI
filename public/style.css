@@ -2,198 +2,219 @@
 /* @import url('') */
 
 @font-face {
-    font-family: 'bluu';
-    /* src: url('bluunext-bold-webfont.woff2') format('woff2'),
+  font-family: "bluu";
+  /* src: url('bluunext-bold-webfont.woff2') format('woff2'),
          url('bluunext-bold-webfont.woff') format('woff'),
          url('bluunext-bold.ttf') format('truetype'),
          url('bluunext-bold-webfont.svg#bluu_nextbold') format('svg'); */
-         src: url(../Fonts/BluuNext-Bolditalic.otf);
-    /* font-weight: normal;
+  src: url(../Fonts/BluuNext-Bolditalic.otf);
+  /* font-weight: normal;
     font-style: normal; */
 }
 
-body{
-    background-color: #873336;
-    margin: 0;
-} 
-
-.homePage{
-    display: flex;
-    flex-direction: row;
-    /* justify-content: center; */
+body {
+  background-color: #873336;
+  margin: 0;
 }
 
-.contentContainerTwo{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 500px;
-    height: 300px;
-    padding: 10px 20px 10px 30px;
-    box-sizing: border-box;
-    background-color: whitesmoke;
-    opacity: 0.7;
-    border-radius: 60px;
+.homePage {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: center; */
 }
 
-.contentContainer{
-    /* opacity: 0.8; */
-    width: 100%;
-    padding: 50px 600px 0 0;
+.contentContainerTwo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  height: 300px;
+  padding: 10px 20px 10px 30px;
+  box-sizing: border-box;
+  background-color: whitesmoke;
+  opacity: 0.7;
+  border-radius: 60px;
 }
 
-h1{
-    font-family: bluu;
-    color: whitesmoke;
+.contentContainer,
+.homeContainer {
+  /* opacity: 0.8; */
+  width: 100%;
+  /* padding: 50px 600px 0 0; */
 }
 
-.sortingHeader{
-    font-family: bluu;
-    color: #873336;
+.homeContainer {
+  display: flex;
+  flex-direction: column;
+
 }
 
-h2{
-    color: whitesmoke;
+h1 {
+  font-family: bluu;
+  color: whitesmoke;
 }
 
-h3{
-    color: dimgray;
+.sortingHeader {
+  font-family: bluu;
+  color: #873336;
 }
 
-p{
-    font-size: 20px;
-    color: #D3A625;
+h2 {
+  color: whitesmoke;
 }
 
-.navBar{
-    display: flex;
-    flex-direction: column; 
-    width: 400px;
-    padding: 140px 20px 0 20px;
-    /* font-family: bluu; */
-} 
-
-li{
-    text-decoration: none;
-    list-style: none;
-    color: whitesmoke;
-    padding: 6px;
+h3 {
+  color: dimgray;
 }
 
-a{
-    text-decoration: none;
-    color: whitesmoke;
+p {
+  font-size: 20px;
+  color: #d3a625;
 }
 
-li :hover{
-    background-color: #D3A625;
-    padding: 4px;
-}
-.logout :hover{
-    background-color: #D3A625;
-    padding: 10px;
-}
-
-.inputSections{
-    background-color: #740001;
-    color: whitesmoke;
-    opacity: 0.5;
-    height: 35px;
-    width: 300px;
-    padding: 3px;
+.navBar {
+  display: flex;
+  flex-direction: column;
+  /* background-color: #D3A625;
+    opacity: 0.5; */
+  width: 400px;
+  padding: 140px 20px 0 20px;
+  /* font-family: bluu; */
 }
 
-::placeholder{
-    color: whitesmoke;
+li {
+  text-decoration: none;
+  list-style: none;
+  color: whitesmoke;
+  padding: 6px;
 }
 
-.inputButton{
-    background-color: #D3A625;
-    /* opacity: 0.7; */
-    color: whitesmoke;
-    height: 30px;
-    width: 100px;
-    border-radius: 10px;
+a {
+  text-decoration: none;
+  color: whitesmoke;
 }
 
-.inputButton :hover{
-    opacity: 0.2;
+li :hover {
+  background-color: #d3a625;
+  padding: 4px;
+}
+.logout :hover {
+  background-color: #d3a625;
+  padding: 10px;
 }
 
-.signup{
-    height: 50px;
-    width: 100px;
+.inputSections {
+  background-color: #740001;
+  color: whitesmoke;
+  opacity: 0.5;
+  height: 35px;
+  width: 300px;
+  padding: 3px;
 }
 
-.signup :hover{
-    background-color: whitesmoke;
-    padding: 16px 10px;
-    /* height: 500px;
+::placeholder {
+  color: whitesmoke;
+}
+
+.inputButton {
+  background-color: #d3a625;
+  /* opacity: 0.7; */
+  color: whitesmoke;
+  height: 30px;
+  width: 100px;
+  border-radius: 10px;
+}
+
+.inputButton :hover {
+  opacity: 0.2;
+}
+
+.signup {
+  height: 50px;
+  width: 100px;
+}
+
+.signup :hover {
+  background-color: whitesmoke;
+  padding: 16px 10px;
+  /* height: 500px;
     width: 100px; */
 }
 
-.login{
-    display: flex;
-    flex-direction: column;
+.login {
+  display: flex;
+  flex-direction: column;
 }
 
-.username, .password, .name{
-    background-color: #740001;
-    color: whitesmoke;
+.username,
+.password,
+.name {
+  background-color: #740001;
+  color: whitesmoke;
+  opacity: 0.5;
+  height: 35px;
+  width: 300px;
+  padding: 3px;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: flex-end;
+  background-color: black;
+  opacity: 0.5;
+  height: 70px;
+  width: 100%;
+  padding: 2px 30px 2px 0;
+}
+
+.images {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 50px 10px 0;
+}
+
+.quote{
     opacity: 0.5;
-    height: 35px;
-    width: 300px;
-    padding: 3px;
 }
 
-.headerContainer{
-    display: flex;
-    justify-content: flex-end;
-    background-color: black;
-    opacity: 0.5;
-    height: 70px;
-    padding: 2px 30px 2px 0;
+.home {
+    padding: 10px 200px 0 0;
 }
 
-.images{
-    display: flex;
-    justify-content: flex-end;
-    padding: 20px 50px 10px 0;
-}
-.houseImage{
-    display: flex;
-    justify-content: center;
-    padding: 10px 50px 10px 0;
+.houseImage {
+  display: flex;
+  justify-content: center;
+  padding: 10px 50px 10px 0;
 }
 
-.spellImage{
-    display: flex;
-    /* justify-content: center; */
-    padding: 10px 50px 10px 0;
+.spellImage {
+  display: flex;
+  /* justify-content: center; */
+  padding: 10px 50px 10px 0;
 }
 
-.sortingHat{
-    padding: 0 0 0 20px;
-    width: 100%;
+.sortingHat {
+  padding: 0 0 0 20px;
+  width: 100%;
 }
 
-.Gryffindor{
-    color: #400504;
+.Gryffindor {
+  color: #400504;
 }
 
-.Slytherin{
-    color: #2B8307;
+.Slytherin {
+  color: #2b8307;
 }
-.Ravenclaw{
-    color: #006BFF;
+.Ravenclaw {
+  color: #006bff;
 }
-.Hufflepuff{
-    color: #ECD80D;
+.Hufflepuff {
+  color: #ecd80d;
 }
 
-.hogwarts{
-    width: 140px;
-    height: 60px;
-    /* color: black; */
+.hogwarts {
+  width: 140px;
+  height: 60px;
+  /* color: black; */
 }

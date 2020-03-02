@@ -17,6 +17,7 @@
 
 **Packages to install**
 - npm i express
+- npm i express-router
 - npm i handlebars
 - npm i body-parser
 - npm i path
