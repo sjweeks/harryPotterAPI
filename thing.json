@@ -1,0 +1,10 @@
+{
+    "cookie": {
+        "originalMaxAge": 7200000,
+        "expires": "2020-03-03T12:55:54.705Z",
+        "httpOnly": true,
+        "path": "/",
+        "sameSite": true
+    },
+    "userID": "dfjz5ZzqadVwqwKS6FPhd"
+}
