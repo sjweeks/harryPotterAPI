@@ -77,10 +77,7 @@ router.get("/houses", async (req, res) => {
 
 router.post("/houses", async (req, res) => {
 	let input = encodeURIComponent(req.body.houses);
-
 	let data = await harryPotterData.houseData();
-	// console.log(data);
-
 	let houses = [];
 
 	for (const item of data) {
@@ -93,7 +90,6 @@ router.post("/houses", async (req, res) => {
 			values: item.values
 		});
 	}
-
 	for (const house of houses) {
 		if (house.name == input) {
 			res.render("houses", {
@@ -102,7 +98,6 @@ router.post("/houses", async (req, res) => {
 			return;
 		}
 	}
-
 	res.render("houses", {
 		err: "Error."
 	});
@@ -144,7 +139,6 @@ router.get("/spells", async (req, res) => {
 router.post("/spells", async (req, res) => {
 	let input = encodeURIComponent(req.body.spells);
 	let data = await harryPotterData.spellData();
-
 	let spells = [];
 
 	for (const item of data) {
@@ -154,7 +148,6 @@ router.post("/spells", async (req, res) => {
 			effect: item.effect
 		});
 	}
-
 	for (const spell of spells) {
 		if (spell.spell == input) {
 			res.render("spells", {
@@ -178,7 +171,6 @@ router.post("/signup", async (req, res) => {
 	let password = req.body.password;
 	let name = req.body.name;
 	let email = req.body.email;
-
 	let docs = await getInfo.getUsers(username);
 
 	if (docs.length > 0) {
@@ -187,7 +179,6 @@ router.post("/signup", async (req, res) => {
 		});
 		return;
 	}
-
 	const user = new UserSchema({
 		username: username,
 		password: password,
@@ -226,7 +217,6 @@ router.post("/login", async (req, res) => {
 	let password = req.body.password;
 	let docs = await getInfo.getUsers(username);
 	let verify = await getInfo.getPassword(password);
-
 	let actualName = await getInfo.getName(username);
 
 	if (docs.length > 0 && verify.length > 0) {
@@ -257,8 +247,7 @@ router.get("/profile", async (req, res) => {
 	let username = req.session.name
 	let loggedIN = await getSession(req.session.userID);
 	let actualName = await getInfo.getName(username);
-
-	console.log(actualName);
+	// console.log(actualName);
 
 	if (loggedIN) {
 		res.render("profile", {
