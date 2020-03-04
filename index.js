@@ -2,12 +2,9 @@ const hbs = require("express-handlebars");
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
-const nanoID = require("nanoid");
-const fs = require("fs");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
-const UserSchema = require("./models/user");
 const methods = require("./routes/methods");
 
 let app = express();

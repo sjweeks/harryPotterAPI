@@ -1,25 +1,15 @@
-let {
-	Router
-} = require("express");
+let {Router} = require("express");
 let router = Router();
 
-const hbs = require("express-handlebars");
-const path = require("path");
-const getInfo = require("../lib/getUsers");
-const getSession = require("../lib/getSession");
-const bodyParser = require("body-parser");
 const UserSchema = require("../models/user");
 const nanoID = require("nanoid");
-const mongoose = require("mongoose");
+const fs = require("fs");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
-const methods = require("../routes/methods");
 
 const harryPotterData = require("../lib/harryPotter");
-
-// username = username
-// name = name
-// userID = userID
+const getInfo = require("../lib/getUsers");
+const getSession = require("../lib/getSession");
 
 router.get("/", (req, res) => {
 	res.render("index");
@@ -79,7 +69,7 @@ router.get("/houses", async (req, res) => {
 	if (loggedIN) {
 		res.render("houses");
 	} else {
-		res.render("login", {
+		res.redirect("login", {
 			err: "Please log in"
 		});
 	}
@@ -124,7 +114,7 @@ router.get("/sortingHat", async (req, res) => {
 	if (loggedIN) {
 		res.render("sortingHat");
 	} else {
-		res.render("login", {
+		res.redirect("login", {
 			err: "Please log in"
 		});
 	}
@@ -145,7 +135,7 @@ router.get("/spells", async (req, res) => {
 	if (loggedIN) {
 		res.render("spells");
 	} else {
-		res.render("login", {
+		res.redirect("login", {
 			err: "Please log in"
 		});
 	}
@@ -209,9 +199,10 @@ router.post("/signup", async (req, res) => {
 	req.session.name = req.body.username;
 	req.session.save();
 
-	res.render("profile", {
+	res.redirect("profile", {
 		name,
-		username
+		username,
+		welcome: `Welcome ${name}!`
 	});
 });
 
@@ -221,7 +212,7 @@ router.get("/login", async (req, res) => {
 	let actualName = await getInfo.getName(username);
 
 	if (loggedIN) {
-		res.render("profile", {
+		res.redirect("profile", {
 			name: actualName,
 			username: username
 		});
@@ -240,10 +231,10 @@ router.post("/login", async (req, res) => {
 
 	if (docs.length > 0 && verify.length > 0) {
 		req.session.userID = nanoID();
-		req.session.name = req.body.username; // tidy the variables names out
+		req.session.name = req.body.username;
 		req.session.save();
 
-		res.render("profile", {
+		res.redirect("profile", {
 			name: actualName,
 			username: username,
 			welcome: `Welcome back ${actualName}!`
@@ -255,7 +246,7 @@ router.post("/login", async (req, res) => {
 		});
 		return;
 	} else {
-		res.render("signup", {
+		res.redirect("signup", {
 			err: "Create an account"
 		});
 		return;
@@ -275,7 +266,7 @@ router.get("/profile", async (req, res) => {
 			name: actualName
 		});
 	} else {
-		res.render("login");
+		res.redirect("login");
 	}
 });
 
@@ -286,7 +277,7 @@ router.post("/profile", (req, res) => {
 router.post("/logout", async (req, res) => {
 	req.session.destroy();
 
-	res.render("login", {
+	res.redirect("login", {
 		logout: "You have successfully logged out"
 	});
 });
