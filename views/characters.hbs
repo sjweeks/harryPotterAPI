@@ -12,11 +12,20 @@
     <br>
     <form action="/characters" method="POST">
         {{!-- name for "character was incorrect - was characterPlace" --}}
-        <input class="inputSections" type="text" name="character" placeholder="Enter Character Name">
+        <input class="inputSections" type="text" name="character" placeholder={{placeholder}}>
         <br>
+        <br>
+        <br>
+        <label class="switch">
+            <input class="switch-input" type="checkbox" />
+            <span class="switch-label" data-on="Character" data-off="Alias"></span> <span class="switch-handle"></span>
+        </label>
         <br>
         <input class="inputButton" type="submit" value="Submit">
     </form>
+    <br>
+    <br>
+    <br>
 </div>
 
-        {{!-- <label for="location">Country Code: </label> --}}
+{{!-- <label for="location">Country Code: </label> --}}
