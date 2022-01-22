@@ -16,7 +16,7 @@
     "express-session": "^1.17.0",
     "handlebars": "^4.7.3",
     "mongoose": "^5.9.2",
-    "nanoid": "^2.1.11",
+    "nanoid": "^3.1.31",
     "node-fetch": "^2.6.0",
     "path": "^0.12.7",
     "request": "^2.88.2"
